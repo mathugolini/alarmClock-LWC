@@ -1,3 +1,5 @@
 import { LightningElement } from 'lwc';
-
-export default class AlarmClockApp extends LightningElement {}
+import AlarmClockAssets from '@salesforce/resourceUrl/AlarmClockAssets'
+export default class AlarmClockApp extends LightningElement {
+    clockImage = AlarmClockAssets+'/AlarmClockAssets/clock.png'
+}
