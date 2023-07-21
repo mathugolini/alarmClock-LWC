@@ -8,7 +8,7 @@ export default class AlarmClockApp extends LightningElement {
   meridiems =['AM', 'PM']
   alarmTime
   isAlarmSet = false
-
+  isAlarmTriggered = false
   hourSelected
   minSelected
   meridiemSelected
@@ -16,7 +16,9 @@ export default class AlarmClockApp extends LightningElement {
   get isFieldNotSelected(){
     return !(this.hourSelected && this.minSelected && this.meridiemSelected)
   }
-
+  get shakeImage(){
+    return this.isAlarmTriggered ? 'shake':''
+  }
   connectedCallback(){
     this.createHoursOptions()
     this.createMinutesOptions()
@@ -42,6 +44,7 @@ export default class AlarmClockApp extends LightningElement {
       this.currentTime = `${hour}:${min}:${sec} ${ampm}`
       if(this.alarmTime === `${hour}:${min} ${ampm}`){
         console.log("Alarm Triggered!!")
+        this.isAlarmTriggered = true
       }
 
     }, 1000)
@@ -70,9 +73,9 @@ export default class AlarmClockApp extends LightningElement {
       this.meridiemSelected = value
     } else {}
 
-    console.log(" this.hourSelected",  this.hourSelected)
-    console.log(" this.minSelected",  this.minSelected)
-    console.log(" this.meridiemSelected",  this.meridiemSelected)
+    // console.log(" this.hourSelected",  this.hourSelected)
+    // console.log(" this.minSelected",  this.minSelected)
+    // console.log(" this.meridiemSelected",  this.meridiemSelected)
   }
 
   setAlarmHandler(){
@@ -82,6 +85,7 @@ export default class AlarmClockApp extends LightningElement {
   clearAlarmHandler(){
     this.alarmTime = ''
     this.isAlarmSet = false
+    this.isAlarmTriggered = false
     const elements = this.template.querySelectorAll('c-clock-dropdown')
     Array.from(elements).forEach(element=>{
       element.reset("")
