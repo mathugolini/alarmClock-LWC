@@ -6,11 +6,17 @@ export default class AlarmClockApp extends LightningElement {
   hours =[]
   minutes = []
   meridiems =['AM', 'PM']
+  alarmTime
+  isAlarmSet = false
 
   hourSelected
   minSelected
-  meridiemsSelected 
-  
+  meridiemSelected
+
+  get isFieldNotSelected(){
+    return !(this.hourSelected && this.minSelected && this.meridiemSelected)
+  }
+
   connectedCallback(){
     this.createHoursOptions()
     this.createMinutesOptions()
@@ -34,6 +40,9 @@ export default class AlarmClockApp extends LightningElement {
       sec  = sec<10 ? "0"+sec : sec
   
       this.currentTime = `${hour}:${min}:${sec} ${ampm}`
+      if(this.alarmTime === `${hour}:${min} ${ampm}`){
+        console.log("Alarm Triggered!!")
+      }
 
     }, 1000)
   }
@@ -51,20 +60,31 @@ export default class AlarmClockApp extends LightningElement {
     }
   }
 
-  optionhandler(event) {
+  optionhandler(event){
     const {label, value} = event.detail
-    if (label === "Hour(s)") {
+    if(label === "Hour(s)"){
       this.hourSelected = value
-    } else if (label === "Minute(s)") {
+    } else if(label === "Minute(s)"){
       this.minSelected = value
-    } else if (label === "AM/PM") {
-      this.meridiemsSelected = value
+    } else if(label === "AM/PM"){
+      this.meridiemSelected = value
     } else {}
 
-    console.log(" this.hourSelected", this.hourSelected)
-    console.log(" this.minSelected", this.minSelected)
-    console.log(" this.meridiemsSelected", this.meridiemsSelected)
+    console.log(" this.hourSelected",  this.hourSelected)
+    console.log(" this.minSelected",  this.minSelected)
+    console.log(" this.meridiemSelected",  this.meridiemSelected)
   }
 
-
+  setAlarmHandler(){
+    this.alarmTime = `${this.hourSelected}:${this.minSelected} ${this.meridiemSelected}`
+    this.isAlarmSet = true
+  }
+  clearAlarmHandler(){
+    this.alarmTime = ''
+    this.isAlarmSet = false
+    const elements = this.template.querySelectorAll('c-clock-dropdown')
+    Array.from(elements).forEach(element=>{
+      element.reset("")
+    })
+  }
 }
