@@ -2,7 +2,7 @@ import { LightningElement } from 'lwc';
 import AlarmClockAssets from '@salesforce/resourceUrl/AlarmClockAssets'
 export default class AlarmClockApp extends LightningElement {
   clockImage = AlarmClockAssets+'/AlarmClockAssets/clock.png'
-  ringtone = new Audio (AlarmClockAssets+'/AlarmClockAssets/Clocksound.mp3')
+  ringtone = new Audio(AlarmClockAssets+'/AlarmClockAssets/Clocksound.mp3')
   currentTime = ''
   hours =[]
   minutes = []
@@ -75,10 +75,6 @@ export default class AlarmClockApp extends LightningElement {
     } else if(label === "AM/PM"){
       this.meridiemSelected = value
     } else {}
-
-    // console.log(" this.hourSelected",  this.hourSelected)
-    // console.log(" this.minSelected",  this.minSelected)
-    // console.log(" this.meridiemSelected",  this.meridiemSelected)
   }
 
   setAlarmHandler(){
@@ -89,7 +85,7 @@ export default class AlarmClockApp extends LightningElement {
     this.alarmTime = ''
     this.isAlarmSet = false
     this.isAlarmTriggered = false
-    this.ringtone.pause() 
+    this.ringtone.pause()
     const elements = this.template.querySelectorAll('c-clock-dropdown')
     Array.from(elements).forEach(element=>{
       element.reset("")
